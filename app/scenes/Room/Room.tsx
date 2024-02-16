@@ -1,22 +1,38 @@
 import {observer} from "mobx-react";
-import React from "react";
-import {client} from "~/utils/ApiClient";
-import useStores from "~/hooks/useStores";
+import React, {useState} from "react";
+import { AccessToken } from "livekit-server-sdk";
+import Storage from "@shared/utils/Storage";
 
 
 type Props = { notFound?: boolean };
 
-async function getToken() {
-    const res = await client.get("/room.getToken", {
+const createToken = () => {
+    const roomName = "quickstart-room";
+    const participantName = Storage.get("AUTH_STORE").user.name;
+    const at = new AccessToken("APIRN7cNN67ZwcG", "hgzqrcbcyjytm2FJZq306njCOL3vtBTpS8hWqmLuB2B", {
+        identity: participantName,
     });
-    // const { room} = useStores();
-    // await room.getToken()
-}
+    at.addGrant({ roomJoin: true, room: roomName });
+    return at.toJwt();
+};
 
 function Room(props: Props) {
-    getToken()
+    const [token, setToken] = useState("");
+    const handleGenerateToken = () => {
+        createToken().then((token) => {
+            return setToken(token);
+        });
+    }
+
     return (
-        <a>{12}</a>
+        <div>
+            <p>该页面用于选择或创建Room</p>
+            <button onClick={handleGenerateToken}>生成Token</button>
+            <div style={{marginTop:'20px'}}>
+                {token && <textarea cols={80} rows={5} readOnly value={token}/>}
+            </div>
+        </div>
     );
 }
+
 export default observer(Room);

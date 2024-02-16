@@ -107,15 +107,15 @@ function AppSidebar() {
                 exact={false}
               />
               <SidebarLink
-                  to={videoPath()}
-                  icon={<SearchIcon />}
-                  label={t("Video")}
-                  exact={false}
-              />
-              <SidebarLink
                   to={roomPath()}
                   icon={<SearchIcon />}
                   label={t("Room")}
+                  exact={false}
+              />
+              <SidebarLink
+                  to={videoPath()}
+                  icon={<SearchIcon />}
+                  label={t("Video")}
                   exact={false}
               />
               {can.createDocument && (

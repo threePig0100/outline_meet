@@ -8,13 +8,12 @@ const createToken = () => {
   const roomName = "quickstart-room";
   // identifier to be used for participant.
   // it's available as LocalParticipant.identity with livekit-client SDK
-  const participantName = "quickstart-username2";
+  const participantName = "quickstart-username";
 
   const at = new AccessToken("APIRN7cNN67ZwcG", "hgzqrcbcyjytm2FJZq306njCOL3vtBTpS8hWqmLuB2B", {
     identity: participantName,
   });
   at.addGrant({ roomJoin: true, room: roomName });
-
   return at.toJwt();
 };
 
@@ -27,5 +26,6 @@ app.get("/getToken", (req, res) => {
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console,no-undef
+  console.log(createToken())
   console.log(`Server listening on port ${port}`);
 });

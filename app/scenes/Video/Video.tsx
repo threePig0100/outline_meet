@@ -16,7 +16,6 @@ import {useState} from "react";
 type Props = { notFound?: boolean };
 
 const serverUrl = "wss://treepig-xfr1lc4a.livekit.cloud"
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2aWRlbyI6eyJyb29tSm9pbiI6dHJ1ZSwicm9vbSI6InF1aWNrc3RhcnQtcm9vbSJ9LCJpYXQiOjE3MDY3MDI2MzEsIm5iZiI6MTcwNjcwMjYzMSwiZXhwIjoxNzA2NzI0MjMxLCJpc3MiOiJBUElSTjdjTk42N1p3Y0ciLCJzdWIiOiJxdWlja3N0YXJ0LXVzZXJuYW1lIiwianRpIjoicXVpY2tzdGFydC11c2VybmFtZSJ9.fRkEjyvwvTaRWpBmkjbA2GphnmmzxQHk84kmDnS5xds"
 
 function Video(props: Props) {
     const [token, setToken] = useState('');
@@ -29,10 +28,10 @@ function Video(props: Props) {
         setShowVideo(true); // 点击按钮后显示视频
     };
     return (
-        <div>
-            <input type="text" value={token} onChange={handleInputChange} />
-            <button onClick={handleButtonClick}>确认</button>
-
+        <div style={{marginTop: '20px'}}>
+            <p>请输入token以加入房间</p>
+            <input type="text" value={token} onChange={handleInputChange}/>
+            <button style={{marginLeft: '20px'}} onClick={handleButtonClick}>确认</button>
             {showVideo && token && (
                 <LiveKitRoom
                     video={true}
@@ -40,16 +39,17 @@ function Video(props: Props) {
                     token={token}
                     serverUrl={serverUrl}
                     data-lk-theme="default"
-                    style={{ height: '100vh' }}
+                    style={{height: '100vh'}}
                 >
-                    <MyVideoConference />
-                    <RoomAudioRenderer />
-                    <ControlBar />
+                    <MyVideoConference/>
+                    <RoomAudioRenderer/>
+                    <ControlBar/>
                 </LiveKitRoom>
             )}
         </div>
     );
 }
+
 function MyVideoConference() {
     // `useTracks` returns all camera and screen share tracks. If a user
     // joins without a published camera track, a placeholder track is returned.
