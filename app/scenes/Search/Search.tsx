@@ -91,7 +91,6 @@ function Search(props: Props) {
         query,
         createdAt: new Date().toISOString(),
       });
-
       return async () =>
         titleFilter
           ? await documents.searchTitles(query, filters)
