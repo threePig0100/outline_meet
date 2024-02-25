@@ -15,8 +15,8 @@ export default class RoomStore extends Store<Room>{
     constructor(rootStore: RootStore) {
         super(rootStore, Room);
     }
-    @action
-    createRoom = async () => {
-        const res = await client.post("/rooms.create");
-    }
+    // @action
+    // createRoom = async () => {
+    //     const res = await client.post("/rooms.create",{query : "1"});
+    // }
 }

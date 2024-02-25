@@ -1,19 +1,14 @@
 import auth from "@server/middlewares/authentication";
 import pagination from "@server/routes/api/middlewares/pagination";
-import {rateLimiter} from "@server/middlewares/rateLimiter";
-import {RateLimiterStrategy} from "@server/utils/RateLimiter";
+import { rateLimiter } from "@server/middlewares/rateLimiter";
+import { RateLimiterStrategy } from "@server/utils/RateLimiter";
 import validate from "@server/middlewares/validate";
 import * as T from "@server/routes/api/documents/schema";
-import {APIContext} from "@server/types";
-import {getTeamFromContext} from "@server/utils/passport";
-import documentLoader from "@server/commands/documentLoader";
-import {AuthenticationError, InvalidRequestError} from "@server/errors";
-import invariant from "invariant";
-import SearchHelper from "@server/models/helpers/SearchHelper";
-import {Collection, SearchQuery} from "@server/models";
-import {authorize} from "@server/policies";
-import {presentDocument, presentPolicies} from "@server/presenters";
-import router from "@server/routes/api/documents";
+import { APIContext } from "@server/types";
+import Router from "koa-router";
+// import { RoomServiceClient, Room } from 'livekit-server-sdk'
+const router = new Router();
+const axios = require('axios');
 
 router.post(
     "rooms.create",
@@ -21,7 +16,27 @@ router.post(
     pagination(),
     rateLimiter(RateLimiterStrategy.OneHundredPerMinute),
     validate(T.DocumentsSearchSchema),
-    async () => {
-        console.log('rooms.create')
+    async (ctx: APIContext<T.DocumentsSearchReq>) => {
+        const {
+            query,
+            includeArchived,
+            includeDrafts,
+            collectionId,
+            userId,
+            dateFilter,
+            shareId,
+            snippetMinWords,
+            snippetMaxWords,
+        } = ctx.input.body;
+        console.log("收到")
+        axios.get('http://localhost:4000/createRoom')
+            .then(function (response: { data: any; }) {
+                console.log(response.data);
+            })
+            .catch(function (error: any) {
+                console.log(error);
+            });
     }
 );
+
+export default router;

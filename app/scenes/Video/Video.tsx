@@ -18,7 +18,7 @@ type Props = { notFound?: boolean };
 const serverUrl = "wss://treepig-xfr1lc4a.livekit.cloud"
 
 function Video(props: Props) {
-    const [token, setToken] = useState('');
+    const [token, setToken] = useState("eyJhbGciOiJIUzI1NiJ9.eyJ2aWRlbyI6eyJyb29tSm9pbiI6dHJ1ZSwicm9vbSI6IjEyMiJ9LCJpc3MiOiJBUElSTjdjTk42N1p3Y0ciLCJleHAiOjE3MDg4ODY4NzUsIm5iZiI6MCwic3ViIjoibXkifQ.tYraaP0mRqxxp2hrT4t5oRJigcq-amnK5yq2PvrK1hM");
     const [showVideo, setShowVideo] = useState(false); // 控制视频显示的状态
     const handleInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setToken(event.target.value);

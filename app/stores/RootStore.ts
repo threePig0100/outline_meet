@@ -41,7 +41,7 @@ export default class RootStore {
   comments: CommentsStore;
   dialogs: DialogsStore;
   documents: DocumentsStore;
-  room:RoomStore;
+  rooms:RoomStore;
   events: EventsStore;
   groups: GroupsStore;
   groupMemberships: GroupMembershipsStore;
