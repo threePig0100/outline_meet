@@ -233,34 +233,35 @@ function Details() {
 
           <Heading as="h2">{t("Behavior")}</Heading>
 
-          <SettingRow
-            visible={isCloudHosted}
-            label={t("Subdomain")}
-            name="subdomain"
-            description={
-              subdomain ? (
-                <>
-                  <Trans>Your workspace will be accessible at</Trans>{" "}
-                  <strong>
-                    {subdomain}.{getBaseDomain()}
-                  </strong>
-                </>
-              ) : (
-                t(
-                  "Choose a subdomain to enable a login page just for your team."
-                )
-              )
-            }
-          >
-            <Input
-              id="subdomain"
-              value={subdomain || ""}
-              onChange={handleSubdomainChange}
-              autoComplete="off"
-              minLength={4}
-              maxLength={32}
-            />
-          </SettingRow>
+          {/*首选项中的details的二级域名设置*/}
+          {/*<SettingRow*/}
+          {/*  visible={isCloudHosted}*/}
+          {/*  label={t("Subdomain")}*/}
+          {/*  name="subdomain"*/}
+          {/*  description={*/}
+          {/*    subdomain ? (*/}
+          {/*      <>*/}
+          {/*        <Trans>Your workspace will be accessible at</Trans>{" "}*/}
+          {/*        <strong>*/}
+          {/*          {subdomain}.{getBaseDomain()}*/}
+          {/*        </strong>*/}
+          {/*      </>*/}
+          {/*    ) : (*/}
+          {/*      t(*/}
+          {/*        "Choose a subdomain to enable a login page just for your team."*/}
+          {/*      )*/}
+          {/*    )*/}
+          {/*  }*/}
+          {/*>*/}
+          {/*  <Input*/}
+          {/*    id="subdomain"*/}
+          {/*    value={subdomain || ""}*/}
+          {/*    onChange={handleSubdomainChange}*/}
+          {/*    autoComplete="off"*/}
+          {/*    minLength={4}*/}
+          {/*    maxLength={32}*/}
+          {/*  />*/}
+          {/*</SettingRow>*/}
           <SettingRow
             border={false}
             label={t("Start view")}

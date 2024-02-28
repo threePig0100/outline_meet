@@ -73,30 +73,31 @@ function Notifications() {
         "Receive a notification whenever a new collection is created"
       ),
     },
-    {
-      event: NotificationEventType.InviteAccepted,
-      icon: <UserIcon />,
-      title: t("Invite accepted"),
-      description: t(
-        "Receive a notification when someone you invited creates an account"
-      ),
-    },
-    {
-      event: NotificationEventType.AddUserToDocument,
-      icon: <DocumentIcon />,
-      title: t("Invited to document"),
-      description: t(
-        "Receive a notification when a document is shared with you"
-      ),
-    },
-    {
-      event: NotificationEventType.AddUserToCollection,
-      icon: <CollectionIcon />,
-      title: t("Invited to collection"),
-      description: t(
-        "Receive a notification when you are given access to a collection"
-      ),
-    },
+      // 关于invite成员
+    // {
+    //   event: NotificationEventType.InviteAccepted,
+    //   icon: <UserIcon />,
+    //   title: t("Invite accepted"),
+    //   description: t(
+    //     "Receive a notification when someone you invited creates an account"
+    //   ),
+    // },
+    // {
+    //   event: NotificationEventType.AddUserToDocument,
+    //   icon: <DocumentIcon />,
+    //   title: t("Invited to document"),
+    //   description: t(
+    //     "Receive a notification when a document is shared with you"
+    //   ),
+    // },
+    // {
+    //   event: NotificationEventType.AddUserToCollection,
+    //   icon: <CollectionIcon />,
+    //   title: t("Invited to collection"),
+    //   description: t(
+    //     "Receive a notification when you are given access to a collection"
+    //   ),
+    // },
     {
       event: NotificationEventType.ExportCompleted,
       icon: <CheckboxIcon checked />,

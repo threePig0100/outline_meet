@@ -140,63 +140,63 @@ function Login({ children }: Props) {
   }
 
   const isCustomDomain = parseDomain(window.location.origin).custom;
-
+  // console.log("isCustomDomain", isCustomDomain);
   // Unmapped custom domain
-  if (isCloudHosted && isCustomDomain && !config.name) {
-    return (
-      <Background>
-        {/*<BackButton config={config} />*/}
-        <ChangeLanguage locale={detectLanguage()} />
-        <Centered align="center" justify="center" column auto>
-          <PageTitle title={t("Custom domain setup")} />
-          <Heading centered>{t("Almost there")}…</Heading>
-          <Note>
-            {t(
-              "Your custom domain is successfully pointing at Outline. To complete the setup process please contact support."
-            )}
-          </Note>
-        </Centered>
-      </Background>
-    );
-  }
+  // if (isCloudHosted && isCustomDomain && !config.name) {
+  //   return (
+  //     <Background>
+  //       {/*<BackButton config={config} />*/}
+  //       <ChangeLanguage locale={detectLanguage()} />
+  //       <Centered align="center" justify="center" column auto>
+  //         <PageTitle title={t("Custom domain setup")} />
+  //         <Heading centered>{t("Almost there")}…</Heading>
+  //         <Note>
+  //           {t(
+  //             "Your custom domain is successfully pointing at Outline. To complete the setup process please contact support."
+  //           )}
+  //         </Note>
+  //       </Centered>
+  //     </Background>
+  //   );
+  // }
 
-  if (Desktop.isElectron() && notice === "domain-required") {
-    return (
-      <Background>
-        {/*<BackButton config={config} />*/}
-        <ChangeLanguage locale={detectLanguage()} />
-
-        <Centered
-          as="form"
-          onSubmit={handleGoSubdomain}
-          align="center"
-          justify="center"
-          column
-          auto
-        >
-          <Heading centered>{t("Choose workspace")}</Heading>
-          <Note>
-            {t(
-              "This login method requires choosing your workspace to continue"
-            )}
-            …
-          </Note>
-          <Flex>
-            <Input
-              name="subdomain"
-              style={{ textAlign: "right" }}
-              placeholder={t("subdomain")}
-            >
-              <Domain>.getoutline.com</Domain>
-            </Input>
-          </Flex>
-          <ButtonLarge type="submit" fullwidth>
-            {t("Continue")}
-          </ButtonLarge>
-        </Centered>
-      </Background>
-    );
-  }
+  // if (Desktop.isElectron() && notice === "domain-required") {
+  //   return (
+  //     <Background>
+  //       {/*<BackButton config={config} />*/}
+  //       <ChangeLanguage locale={detectLanguage()} />
+  //
+  //       <Centered
+  //         as="form"
+  //         onSubmit={handleGoSubdomain}
+  //         align="center"
+  //         justify="center"
+  //         column
+  //         auto
+  //       >
+  //         <Heading centered>{t("Choose workspace")}</Heading>
+  //         <Note>
+  //           {t(
+  //             "This login method requires choosing your workspace to continue"
+  //           )}
+  //           …
+  //         </Note>
+  //         <Flex>
+  //           <Input
+  //             name="subdomain"
+  //             style={{ textAlign: "right" }}
+  //             placeholder={t("subdomain")}
+  //           >
+  //             <Domain>.getoutline.com</Domain>
+  //           </Input>
+  //         </Flex>
+  //         <ButtonLarge type="submit" fullwidth>
+  //           {t("Continue")}
+  //         </ButtonLarge>
+  //       </Centered>
+  //     </Background>
+  //   );
+  // }
 
   const hasMultipleProviders = config.providers.length > 1;
   const defaultProvider = find(
@@ -204,36 +204,35 @@ function Login({ children }: Props) {
     (provider) => provider.id === auth.lastSignedIn && !isCreate
   );
 
-  if (emailLinkSentTo) {
-    return (
-      <Background>
-        <BackButton config={config} />
-        <Centered align="center" justify="center" column auto>
-          <PageTitle title={t("Check your email")} />
-          <CheckEmailIcon size={38} />
-          <Heading centered>{t("Check your email")}</Heading>
-          <Note>
-            <Trans
-              defaults="A magic sign-in link has been sent to the email <em>{{ emailLinkSentTo }}</em> if an account exists."
-              values={{ emailLinkSentTo }}
-              components={{ em: <em /> }}
-            />
-          </Note>
-          <br />
-          <ButtonLarge onClick={handleReset} fullwidth neutral>
-            {t("Back to login")}
-          </ButtonLarge>
-        </Centered>
-      </Background>
-    );
-  }
+  // if (emailLinkSentTo) {
+  //   return (
+  //     <Background>
+  //       <BackButton config={config} />
+  //       <Centered align="center" justify="center" column auto>
+  //         <PageTitle title={t("Check your email")} />
+  //         <CheckEmailIcon size={38} />
+  //         <Heading centered>{t("Check your email")}</Heading>
+  //         <Note>
+  //           <Trans
+  //             defaults="A magic sign-in link has been sent to the email <em>{{ emailLinkSentTo }}</em> if an account exists."
+  //             values={{ emailLinkSentTo }}
+  //             components={{ em: <em /> }}
+  //           />
+  //         </Note>
+  //         <br />
+  //         <ButtonLarge onClick={handleReset} fullwidth neutral>
+  //           {t("Back to login")}
+  //         </ButtonLarge>
+  //       </Centered>
+  //     </Background>
+  //   );
+  // }
 
   // If there is only one provider and it's OIDC, redirect immediately.
   if (config.providers.length === 1 && config.providers[0].id === "oidc") {
     window.location.href = getRedirectUrl(config.providers[0].authUrl);
     return null;
   }
-
   return (
     <Background>
       {/*<BackButton config={config} />*/}

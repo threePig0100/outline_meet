@@ -141,83 +141,83 @@ function Security() {
         </Trans>
       </Text>
 
-      <h2>{t("Sign In")}</h2>
-      {authenticationProviders.orderedData
-        // filtering unconnected, until we have ability to connect from this screen
-        .filter((provider) => provider.isConnected)
-        .map((provider) => (
-          <SettingRow
-            key={provider.name}
-            label={
-              <Flex gap={8} align="center">
-                <PluginIcon id={provider.name} /> {provider.displayName}
-              </Flex>
-            }
-            name={provider.name}
-            description={t("Allow members to sign-in with {{ authProvider }}", {
-              authProvider: provider.displayName,
-            })}
-          >
-            <Flex align="center">
-              <CheckboxIcon
-                color={provider.isActive ? theme.accent : undefined}
-                checked={provider.isActive}
-              />{" "}
-              <Text as="p" type="secondary">
-                {provider.isActive ? t("Connected") : t("Disabled")}
-              </Text>
-            </Flex>
-          </SettingRow>
-        ))}
-      <SettingRow
-        label={
-          <Flex gap={8} align="center">
-            <EmailIcon /> {t("Email")}
-          </Flex>
-        }
-        name="guestSignin"
-        description={
-          env.EMAIL_ENABLED
-            ? t("Allow members to sign-in using their email address")
-            : t("The server must have SMTP configured to enable this setting")
-        }
-        border={false}
-      >
-        <Switch
-          id="guestSignin"
-          checked={data.guestSignin}
-          onChange={handleChange}
-          disabled={!env.EMAIL_ENABLED}
-        />
-      </SettingRow>
+      {/*<h2>{t("Sign In")}</h2>*/}
+      {/*{authenticationProviders.orderedData*/}
+      {/*  // filtering unconnected, until we have ability to connect from this screen*/}
+      {/*  .filter((provider) => provider.isConnected)*/}
+      {/*  .map((provider) => (*/}
+      {/*    <SettingRow*/}
+      {/*      key={provider.name}*/}
+      {/*      label={*/}
+      {/*        <Flex gap={8} align="center">*/}
+      {/*          <PluginIcon id={provider.name} /> {provider.displayName}*/}
+      {/*        </Flex>*/}
+      {/*      }*/}
+      {/*      name={provider.name}*/}
+      {/*      description={t("Allow members to sign-in with {{ authProvider }}", {*/}
+      {/*        authProvider: provider.displayName,*/}
+      {/*      })}*/}
+      {/*    >*/}
+      {/*      <Flex align="center">*/}
+      {/*        <CheckboxIcon*/}
+      {/*          color={provider.isActive ? theme.accent : undefined}*/}
+      {/*          checked={provider.isActive}*/}
+      {/*        />{" "}*/}
+      {/*        <Text as="p" type="secondary">*/}
+      {/*          {provider.isActive ? t("Connected") : t("Disabled")}*/}
+      {/*        </Text>*/}
+      {/*      </Flex>*/}
+      {/*    </SettingRow>*/}
+      {/*  ))}*/}
+      {/*<SettingRow*/}
+      {/*  label={*/}
+      {/*    <Flex gap={8} align="center">*/}
+      {/*      <EmailIcon /> {t("Email")}*/}
+      {/*    </Flex>*/}
+      {/*  }*/}
+      {/*  name="guestSignin"*/}
+      {/*  description={*/}
+      {/*    env.EMAIL_ENABLED*/}
+      {/*      ? t("Allow members to sign-in using their email address")*/}
+      {/*      : t("The server must have SMTP configured to enable this setting")*/}
+      {/*  }*/}
+      {/*  border={false}*/}
+      {/*>*/}
+      {/*  <Switch*/}
+      {/*    id="guestSignin"*/}
+      {/*    checked={data.guestSignin}*/}
+      {/*    onChange={handleChange}*/}
+      {/*    disabled={!env.EMAIL_ENABLED}*/}
+      {/*  />*/}
+      {/*</SettingRow>*/}
 
       <h2>{t("Access")}</h2>
-      <SettingRow
-        label={t("Allow users to send invites")}
-        name={TeamPreference.MembersCanInvite}
-        description={t("Allow editors to invite other people to the workspace")}
-      >
-        <Switch
-          id={TeamPreference.MembersCanInvite}
-          checked={team.getPreference(TeamPreference.MembersCanInvite)}
-          onChange={handlePreferenceChange}
-        />
-      </SettingRow>
-      {isCloudHosted && (
-        <SettingRow
-          label={t("Require invites")}
-          name="inviteRequired"
-          description={t(
-            "Require members to be invited to the workspace before they can create an account using SSO."
-          )}
-        >
-          <Switch
-            id="inviteRequired"
-            checked={data.inviteRequired}
-            onChange={handleInviteRequiredChange}
-          />
-        </SettingRow>
-      )}
+      {/*<SettingRow*/}
+      {/*  label={t("Allow users to send invites")}*/}
+      {/*  name={TeamPreference.MembersCanInvite}*/}
+      {/*  description={t("Allow editors to invite other people to the workspace")}*/}
+      {/*>*/}
+      {/*  <Switch*/}
+      {/*    id={TeamPreference.MembersCanInvite}*/}
+      {/*    checked={team.getPreference(TeamPreference.MembersCanInvite)}*/}
+      {/*    onChange={handlePreferenceChange}*/}
+      {/*  />*/}
+      {/*</SettingRow>*/}
+      {/*{isCloudHosted && (*/}
+      {/*  <SettingRow*/}
+      {/*    label={t("Require invites")}*/}
+      {/*    name="inviteRequired"*/}
+      {/*    description={t(*/}
+      {/*      "Require members to be invited to the workspace before they can create an account using SSO."*/}
+      {/*    )}*/}
+      {/*  >*/}
+      {/*    <Switch*/}
+      {/*      id="inviteRequired"*/}
+      {/*      checked={data.inviteRequired}*/}
+      {/*      onChange={handleInviteRequiredChange}*/}
+      {/*    />*/}
+      {/*  </SettingRow>*/}
+      {/*)}*/}
 
       {!data.inviteRequired && (
         <DomainManagement onSuccess={showSuccessMessage} />
