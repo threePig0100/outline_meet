@@ -30,7 +30,6 @@ router.post("auth.config", async (ctx: APIContext<T.AuthConfigReq>) => {
     const team = await Team.scope("withAuthenticationProviders").findOne({
       order: [["createdAt", "DESC"]],
     });
-
     if (team) {
       ctx.body = {
         data: {
@@ -47,7 +46,6 @@ router.post("auth.config", async (ctx: APIContext<T.AuthConfigReq>) => {
       return;
     }
   }
-
   const domain = parseDomain(ctx.request.hostname);
 
   if (domain.custom) {
@@ -101,7 +99,6 @@ router.post("auth.config", async (ctx: APIContext<T.AuthConfigReq>) => {
       return;
     }
   }
-
   // Otherwise, we're requesting from the standard root signin page
   ctx.body = {
     data: {

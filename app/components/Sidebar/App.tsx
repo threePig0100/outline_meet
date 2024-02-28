@@ -112,12 +112,12 @@ function AppSidebar() {
                   label={t("Room")}
                   exact={false}
               />
-              <SidebarLink
-                  to={videoPath()}
-                  icon={<SearchIcon />}
-                  label={t("Video")}
-                  exact={false}
-              />
+              {/*<SidebarLink*/}
+              {/*    to={videoPath()}*/}
+              {/*    icon={<SearchIcon />}*/}
+              {/*    label={t("Video")}*/}
+              {/*    exact={false}*/}
+              {/*/>*/}
               {can.createDocument && (
                 <SidebarLink
                   to={draftsPath()}

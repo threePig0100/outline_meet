@@ -18,12 +18,11 @@ import * as T from "./schema";
 const router = new Router();
 
 router.post(
-  "email",
+  "login",
   rateLimiter(RateLimiterStrategy.TenPerHour),
   validate(T.EmailSchema),
   async (ctx: APIContext<T.EmailReq>) => {
-    const { email, client } = ctx.input.body;
-
+    const { email, password,client } = ctx.input.body;
     const domain = parseDomain(ctx.request.hostname);
 
     let team: Team | null | undefined;
@@ -43,16 +42,22 @@ router.post(
       throw AuthorizationError();
     }
 
+    // const user = await User.scope("withAuthentications").findOne({
+    //   where: {
+    //     teamId: team.id,
+    //     email: email.toLowerCase(),
+    //   },
+    // });
     const user = await User.scope("withAuthentications").findOne({
       where: {
         teamId: team.id,
         email: email.toLowerCase(),
+        password: password,
       },
     });
-
     if (!user) {
       ctx.body = {
-        success: true,
+        success: false,
       };
       return;
     }
@@ -81,6 +86,7 @@ router.post(
 
     // respond with success regardless of whether an email was sent
     ctx.body = {
+      token: user.getEmailSigninToken(), // 过期时间没有填
       success: true,
     };
   }

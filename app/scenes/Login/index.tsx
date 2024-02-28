@@ -60,7 +60,7 @@ function Login({ children }: Props) {
     setEmailLinkSentTo("");
   }, []);
   const handleEmailSuccess = React.useCallback((email) => {
-    setEmailLinkSentTo(email);
+    setEmailLinkSentTo("");
   }, []);
 
   const handleGoSubdomain = React.useCallback(async (event) => {
@@ -113,7 +113,7 @@ function Login({ children }: Props) {
   if (error) {
     return (
       <Background>
-        <BackButton />
+        {/*<BackButton />*/}
         <ChangeLanguage locale={detectLanguage()} />
         <Centered align="center" justify="center" column auto>
           <PageTitle title={t("Login")} />
@@ -145,7 +145,7 @@ function Login({ children }: Props) {
   if (isCloudHosted && isCustomDomain && !config.name) {
     return (
       <Background>
-        <BackButton config={config} />
+        {/*<BackButton config={config} />*/}
         <ChangeLanguage locale={detectLanguage()} />
         <Centered align="center" justify="center" column auto>
           <PageTitle title={t("Custom domain setup")} />
@@ -163,7 +163,7 @@ function Login({ children }: Props) {
   if (Desktop.isElectron() && notice === "domain-required") {
     return (
       <Background>
-        <BackButton config={config} />
+        {/*<BackButton config={config} />*/}
         <ChangeLanguage locale={detectLanguage()} />
 
         <Centered
@@ -236,7 +236,7 @@ function Login({ children }: Props) {
 
   return (
     <Background>
-      <BackButton config={config} />
+      {/*<BackButton config={config} />*/}
       <ChangeLanguage locale={detectLanguage()} />
 
       <Centered align="center" justify="center" gap={12} column auto>
@@ -295,7 +295,6 @@ function Login({ children }: Props) {
           if (defaultProvider && provider.id === defaultProvider.id) {
             return null;
           }
-
           return (
             <AuthenticationProvider
               key={provider.id}

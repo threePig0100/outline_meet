@@ -83,9 +83,9 @@ function Room(props: Props) {
             <button onClick={handleGenerateRoom}>创建房间</button>
             <table>
                 <thead>
-                <tr>
-                    <th style={{textAlign: 'center',width:'100px'}}>序号</th>
-                    <th style={{textAlign: 'center',width:'100px'}}>房间名</th>
+                <tr style={{textAlign: 'center'}}>
+                    <th>序号</th>
+                    <th>房间名</th>
                 </tr>
                 </thead>
                 <tbody style={{display: 'block', maxHeight: '200px', overflowY: 'auto'}}>
@@ -94,9 +94,9 @@ function Room(props: Props) {
                         () => {getToken(room.name);setLoading(true);
                         }
                     }
-                        style={{display: 'table', width: '100%'}}>
-                        <td style={{textAlign: 'center'}}>{index + 1}</td>
-                        <td style={{textAlign: 'center'}}>{room.name}</td>
+                        style={{display: 'table', width: '100%', textAlign: 'center'}}>
+                        <td style={{}}>{index + 1}</td>
+                        <td style={{}}>{room.name}</td>
                     </tr>
                 ))}
                 </tbody>

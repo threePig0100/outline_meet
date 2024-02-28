@@ -126,7 +126,7 @@ export interface Props
     React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>,
     "prefix"
   > {
-  type?: "text" | "email" | "checkbox" | "search" | "textarea";
+  type?: "text" | "email" | "checkbox" | "search" | "textarea" | "password";
   labelHidden?: boolean;
   label?: string;
   flex?: boolean;

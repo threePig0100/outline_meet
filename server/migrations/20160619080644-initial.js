@@ -71,6 +71,11 @@ module.exports = {
       },
       email: {
         type: "CHARACTER VARYING",
+        unique: true,
+        allowNull: false,
+      },
+      password: {
+        type: "CHARACTER VARYING",
         allowNull: false,
       },
       username: {

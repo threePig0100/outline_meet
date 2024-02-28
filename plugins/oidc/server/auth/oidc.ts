@@ -124,7 +124,7 @@ if (
             team: {
               teamId: team?.id,
               // https://github.com/outline/outline/pull/2388#discussion_r681120223
-              name: "Wiki",
+              name: "Enfon",
               domain,
               subdomain,
             },
