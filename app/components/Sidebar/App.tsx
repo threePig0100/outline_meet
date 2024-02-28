@@ -1,5 +1,11 @@
 import { observer } from "mobx-react";
-import { EditIcon, SearchIcon, HomeIcon, SidebarIcon } from "outline-icons";
+import {
+  EditIcon,
+  SearchIcon,
+  HomeIcon,
+  SidebarIcon,
+  CameraIcon
+} from "outline-icons";
 import * as React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -31,6 +37,10 @@ import SidebarLink from "./components/SidebarLink";
 import Starred from "./components/Starred";
 import ToggleButton from "./components/ToggleButton";
 import TrashLink from "./components/TrashLink";
+
+function TerminallIcon() {
+  return null;
+}
 
 function AppSidebar() {
   const { t } = useTranslation();
@@ -108,7 +118,7 @@ function AppSidebar() {
               />
               <SidebarLink
                   to={roomPath()}
-                  icon={<SearchIcon />}
+                  icon={<CameraIcon />}
                   label={t("Room")}
                   exact={false}
               />

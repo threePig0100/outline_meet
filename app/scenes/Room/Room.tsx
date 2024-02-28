@@ -1,5 +1,6 @@
 import {observer} from "mobx-react";
 import * as React from "react";
+import './index.css';
 import { AccessToken } from "livekit-server-sdk";
 import Storage from "@shared/utils/Storage";
 import useStores from "~/hooks/useStores";
@@ -19,6 +20,17 @@ import LoadingIndicator from "~/components/LoadingIndicator";
 
 
 import {useEffect, useState} from "react";
+import Heading from "~/components/Heading";
+import {useTranslation} from "react-i18next";
+import {Link} from "react-router-dom";
+import {newDocumentPath} from "~/utils/routeHelpers";
+import {CopyIcon, PlusIcon} from "outline-icons";
+import Button from "~/components/Button";
+import Flex from "~/components/Flex";
+import Input from "~/components/Input";
+import CopyToClipboard from "~/components/CopyToClipboard";
+import styled from "styled-components";
+import {s} from "@shared/styles";
 
 type Props = { notFound?: boolean };
 const serverUrl = "wss://treepig-xfr1lc4a.livekit.cloud"
@@ -37,13 +49,15 @@ interface Room {
 }
 
 function Room(props: Props) {
+    const { t } = useTranslation();
     const [roomList, setRooms] = useState<Room[]>([]);
     const [token, setToken] = useState("");
     const [roomName, setRoomName] = useState(""); // 新增的 state
     const router = new Router();
     const [loading, setLoading] = useState(false);
-    const handleGenerateRoom = () => {
+    const handleGenerateRoom = () => { //生成房间
         // rooms.createRoom().then(r => {})
+        setLoading(true)
         axios.post('http://localhost:4000/createRoom', {roomName}) // 修改的 axios 请求
             .then(function (response: { data: any; }) {
                 getRooms(); // 创建房间成功后刷新房间列表
@@ -54,9 +68,8 @@ function Room(props: Props) {
     }
     const getToken = (roomName: string) => {
         const participantName = Storage.get("AUTH_STORE").user.name;
-        axios.post('http://localhost:4000/getToken', {roomName,participantName})
+        axios.post('http://localhost:4000/getToken', {roomName, participantName})
             .then(function (response: { data: any; }) {
-                console.log(response.data);
                 setToken(response.data);
             })
             .catch(function (error: any) {
@@ -64,10 +77,11 @@ function Room(props: Props) {
             });
     };
     const getRooms = () => {
+        setLoading(true)
         axios.get('http://localhost:4000/listRoom')
             .then(function (response: { data: any; }) {
                 setRooms(response.data);
-                console.log(response.data);
+                setLoading(false)
             })
             .catch(function (error: any) {
                 console.log(error);
@@ -79,30 +93,49 @@ function Room(props: Props) {
     }, []);
     return (
         <div>
-            <input type="text" style={{marginTop: '20px'}} value={roomName} onChange={e => setRoomName(e.target.value)}/> {/* 新增的输入框 */}
-            <button onClick={handleGenerateRoom}>创建房间</button>
-            <table>
-                <thead>
-                <tr style={{textAlign: 'center'}}>
-                    <th>序号</th>
-                    <th>房间名</th>
-                </tr>
-                </thead>
-                <tbody style={{display: 'block', maxHeight: '200px', overflowY: 'auto'}}>
-                {roomList.map((room, index) => (
-                    <tr key={index} onClick={
-                        () => {getToken(room.name);setLoading(true);
-                        }
-                    }
-                        style={{display: 'table', width: '100%', textAlign: 'center'}}>
-                        <td style={{}}>{index + 1}</td>
-                        <td style={{}}>{room.name}</td>
+            <Heading>{t("Room")}</Heading>
+            <div style={{width: '500px', marginTop: '20px 0'}}>
+                <CopyBlock>
+                    <Flex align="flex-end" gap={8}>
+                        <Input type="text"
+                               value={roomName}
+                               label={t("Want create a room with your team?")}
+                               flex
+                               onChange={e => setRoomName(e.target.value)}/>
+                        <Button style={{marginLeft: '10px', marginBottom: "16px",}}
+                                flex
+                                onClick={handleGenerateRoom}>
+                            {t("创建房间")}
+                        </Button>
+                    </Flex>
+                </CopyBlock>
+            </div>
+            {
+                roomList.length > 0 &&
+                <table className={'room-table'}>
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>房间名</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {roomList.map((room, index) => (
+                        <tr key={index} onClick={
+                            () => {
+                                getToken(room.name);
+                                setLoading(true);
+                            }
+                        }>
+                            <td style={{}}>{index + 1}</td>
+                            <td style={{}}>{room.name}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            }
             <div>
-                {loading && <LoadingIndicator />}
+                {loading && <LoadingIndicator/>}
                 {token && (
                     <LiveKitRoom
                         onDisconnected={() => {
@@ -135,13 +168,13 @@ function MyVideoConference() {
     // joins without a published camera track, a placeholder track is returned.
     const tracks = useTracks(
         [
-            { source: Track.Source.Camera, withPlaceholder: true },
-            { source: Track.Source.ScreenShare, withPlaceholder: false },
+            {source: Track.Source.Camera, withPlaceholder: true},
+            {source: Track.Source.ScreenShare, withPlaceholder: false},
         ],
-        { onlySubscribed: false },
+        {onlySubscribed: false},
     );
     return (
-        <GridLayout tracks={tracks} style={{ height: 'calc(100vh - var(--lk-control-bar-height))' }}>
+        <GridLayout tracks={tracks} style={{height: 'calc(100vh - var(--lk-control-bar-height))'}}>
             {/* The GridLayout accepts zero or one child. The child is used
       as a template to render all passed in tracks. */}
             <ParticipantTile />
@@ -149,4 +182,11 @@ function MyVideoConference() {
     );
 }
 
+const CopyBlock = styled("div")`
+  margin: 2em 0;
+  font-size: 14px;
+  background: ${s("secondaryBackground")};
+  border-radius: 8px;
+  padding: 16px 16px 8px;
+`;
 export default observer(Room);
