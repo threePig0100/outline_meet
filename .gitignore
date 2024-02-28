@@ -1,7 +1,6 @@
 dist
 build
 node_modules/*
-.env
 .log
 .vscode/*
 npm-debug.log
