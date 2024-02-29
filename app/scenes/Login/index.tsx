@@ -52,7 +52,7 @@ function Login({ children }: Props) {
   const [emailLinkSentTo, setEmailLinkSentTo] = React.useState("");
   const isCreate = location.pathname === "/create";
   const rememberLastPath = !!user?.getPreference(
-    UserPreference.RememberLastPath
+      UserPreference.RememberLastPath
   );
   const [lastVisitedPath] = useLastVisitedPath();
 
@@ -67,13 +67,12 @@ function Login({ children }: Props) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
     const normalizedSubdomain = data.subdomain
-      .toString()
-      .toLowerCase()
-      .trim()
-      .replace(/^https?:\/\//, "");
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/^https?:\/\//, "");
     const host = `https://${normalizedSubdomain}.getoutline.com`;
     await Desktop.bridge.addCustomHost(host);
-
     setTimeout(() => {
       window.location.href = host;
     }, 500);
@@ -95,44 +94,41 @@ function Login({ children }: Props) {
   }, [query]);
 
   if (
-    auth.authenticated &&
-    rememberLastPath &&
-    lastVisitedPath !== location.pathname
+      auth.authenticated &&
+      rememberLastPath &&
+      lastVisitedPath !== location.pathname
   ) {
     return <Redirect to={lastVisitedPath} />;
   }
-
   if (auth.authenticated && auth.team?.defaultCollectionId) {
     return <Redirect to={`/collection/${auth.team?.defaultCollectionId}`} />;
   }
-
   if (auth.authenticated) {
     return <Redirect to="/home" />;
   }
 
   if (error) {
     return (
-      <Background>
-        {/*<BackButton />*/}
-        <ChangeLanguage locale={detectLanguage()} />
-        <Centered align="center" justify="center" column auto>
-          <PageTitle title={t("Login")} />
-          <Heading centered>{t("Error")}</Heading>
-          <Note>
-            {t("Failed to load configuration.")}
-            {!isCloudHosted && (
-              <p>
-                {t(
-                  "Check the network requests and server logs for full details of the error."
-                )}
-              </p>
-            )}
-          </Note>
-        </Centered>
-      </Background>
+        <Background>
+          {/*<BackButton />*/}
+          <ChangeLanguage locale={detectLanguage()} />
+          <Centered align="center" justify="center" column auto>
+            <PageTitle title={t("Login")} />
+            <Heading centered>{t("Error")}</Heading>
+            <Note>
+              {t("Failed to load configuration.")}
+              {!isCloudHosted && (
+                  <p>
+                    {t(
+                        "Check the network requests and server logs for full details of the error."
+                    )}
+                  </p>
+              )}
+            </Note>
+          </Centered>
+        </Background>
     );
   }
-
   // we're counting on the config request being fast, so just a simple loading
   // indicator here that's delayed by 250ms
   if (!config) {
@@ -200,8 +196,8 @@ function Login({ children }: Props) {
 
   const hasMultipleProviders = config.providers.length > 1;
   const defaultProvider = find(
-    config.providers,
-    (provider) => provider.id === auth.lastSignedIn && !isCreate
+      config.providers,
+      (provider) => provider.id === auth.lastSignedIn && !isCreate
   );
 
   // if (emailLinkSentTo) {
@@ -227,91 +223,90 @@ function Login({ children }: Props) {
   //     </Background>
   //   );
   // }
-
   // If there is only one provider and it's OIDC, redirect immediately.
   if (config.providers.length === 1 && config.providers[0].id === "oidc") {
     window.location.href = getRedirectUrl(config.providers[0].authUrl);
     return null;
   }
   return (
-    <Background>
-      {/*<BackButton config={config} />*/}
-      <ChangeLanguage locale={detectLanguage()} />
+      <Background>
+        {/*<BackButton config={config} />*/}
+        <ChangeLanguage locale={detectLanguage()} />
 
-      <Centered align="center" justify="center" gap={12} column auto>
-        <PageTitle
-          title={config.name ? `${config.name} – ${t("Login")}` : t("Login")}
-        />
-        <Logo>
-          {config.logo && !isCreate ? (
-            <TeamLogo size={48} src={config.logo} />
-          ) : (
-            <OutlineIcon size={48} />
-          )}
-        </Logo>
-        {isCreate ? (
-          <>
-            <StyledHeading as="h2" centered>
-              {t("Create a workspace")}
-            </StyledHeading>
-            <Content>
-              {t(
-                "Get started by choosing a sign-in method for your new workspace below…"
-              )}
-            </Content>
-          </>
-        ) : (
-          <>
-            <StyledHeading as="h2" centered>
-              {t("Login to {{ authProviderName }}", {
-                authProviderName: config.name || env.APP_NAME,
-              })}
-            </StyledHeading>
-            {children?.(config)}
-          </>
-        )}
-        <Notices />
-        {defaultProvider && (
-          <React.Fragment key={defaultProvider.id}>
-            <AuthenticationProvider
-              isCreate={isCreate}
-              onEmailSuccess={handleEmailSuccess}
-              {...defaultProvider}
-            />
-            {hasMultipleProviders && (
-              <>
-                <Note>
-                  {t("You signed in with {{ authProviderName }} last time.", {
-                    authProviderName: defaultProvider.name,
-                  })}
-                </Note>
-                <Or data-text={t("Or")} />
-              </>
+        <Centered align="center" justify="center" gap={12} column auto>
+          <PageTitle
+              title={config.name ? `${config.name} – ${t("Login")}` : t("Login")}
+          />
+          <Logo>
+            {config.logo && !isCreate ? (
+                <TeamLogo size={48} src={config.logo} />
+            ) : (
+                <OutlineIcon size={48} />
             )}
-          </React.Fragment>
-        )}
-        {config.providers.map((provider) => {
-          if (defaultProvider && provider.id === defaultProvider.id) {
-            return null;
-          }
-          return (
-            <AuthenticationProvider
-              key={provider.id}
-              isCreate={isCreate}
-              onEmailSuccess={handleEmailSuccess}
-              {...provider}
-            />
-          );
-        })}
-        {isCreate && (
-          <Note>
-            <Trans>
-              Already have an account? Go to <Link to="/">login</Link>.
-            </Trans>
-          </Note>
-        )}
-      </Centered>
-    </Background>
+          </Logo>
+          {isCreate ? (
+              <>
+                <StyledHeading as="h2" centered>
+                  {t("Create a workspace")}
+                </StyledHeading>
+                <Content>
+                  {t(
+                      "Get started by choosing a sign-in method for your new workspace below…"
+                  )}
+                </Content>
+              </>
+          ) : (
+              <>
+                <StyledHeading as="h2" centered>
+                  {t("Login to {{ authProviderName }}", {
+                    authProviderName: config.name || env.APP_NAME,
+                  })}
+                </StyledHeading>
+                {children?.(config)}
+              </>
+          )}
+          <Notices />
+          {defaultProvider && (
+              <React.Fragment key={defaultProvider.id}>
+                <AuthenticationProvider
+                    isCreate={isCreate}
+                    onEmailSuccess={handleEmailSuccess}
+                    {...defaultProvider}
+                />
+                {hasMultipleProviders && (
+                    <>
+                      <Note>
+                        {t("You signed in with {{ authProviderName }} last time.", {
+                          authProviderName: defaultProvider.name,
+                        })}
+                      </Note>
+                      <Or data-text={t("Or")} />
+                    </>
+                )}
+              </React.Fragment>
+          )}
+          {config.providers.map((provider) => {
+            if (defaultProvider && provider.id === defaultProvider.id) {
+              return null;
+            }
+            return (
+                <AuthenticationProvider
+                    key={provider.id}
+                    isCreate={isCreate}
+                    onEmailSuccess={handleEmailSuccess}
+                    {...provider}
+                />
+            );
+          })}
+          {isCreate && (
+              <Note>
+                <Trans>
+                  Already have an account? Go to <Link to="/">login</Link>.
+                </Trans>
+              </Note>
+          )}
+        </Centered>
+      </Background>
   );
 }
 

@@ -94,13 +94,10 @@ router.use(compress());
 
 router.get("/locales/:lng.json", async (ctx) => {
   const { lng } = ctx.params;
-  console.log(lng)
-  console.log(path.join(lng, "translation.json"))
   if (!languages.includes(lng)) {
     ctx.status = 404;
     return;
   }
-  console.log(path.join(__dirname, "../../shared/i18n/locales"))
   await send(ctx, path.join(lng, "translation.json"), {
     setHeaders: (res, _, stats) => {
       res.setHeader("Last-Modified", formatRFC7231(stats.mtime));
@@ -110,8 +107,7 @@ router.get("/locales/:lng.json", async (ctx) => {
         crypto.createHash("md5").update(stats.mtime.toISOString()).digest("hex")
       );
     },
-    // root: path.join(__dirname, "../../shared/i18n/locales"),
-    root:"/Users/gongrunze/outline_meet/shared/i18n/locales"
+    root: path.join(__dirname, "../../../shared/i18n/locales")
   });
 });
 

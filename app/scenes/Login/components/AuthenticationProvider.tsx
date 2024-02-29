@@ -67,7 +67,6 @@ function AuthenticationProvider(props: Props) {
 
     if (showEmailSignin && email && password) {
       setSubmitting(true);
-
       try {
         const response = await client.post(event.currentTarget.action, {
           email,
@@ -78,13 +77,14 @@ function AuthenticationProvider(props: Props) {
           window.location.href = response.redirect;
         } else {
           if (response.success) {
-            window.location.href = "/auth/email.callback?token="+response.token+"&amp;client=web";
-          }else{
+            window.location.href = "/auth/email.callback?token=" + response.token + "&amp;client=web";
+          } else {
             window.alert("用户名和密码不匹配，请重新输入")
           }
           props.onEmailSuccess(email);
         }
-
+      }catch (e){
+        console.log(e)
       } finally {
         setSubmitting(false);
       }

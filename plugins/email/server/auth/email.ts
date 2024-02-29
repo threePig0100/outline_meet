@@ -24,7 +24,7 @@ router.post(
   async (ctx: APIContext<T.EmailReq>) => {
     const { email, password,client } = ctx.input.body;
     const domain = parseDomain(ctx.request.hostname);
-
+      domain.teamSubdomain = "enfon"
     let team: Team | null | undefined;
     if (!env.isCloudHosted) {
       team = await Team.scope("withAuthenticationProviders").findOne();
@@ -37,7 +37,6 @@ router.post(
         where: { subdomain: domain.teamSubdomain },
       });
     }
-
     if (!team?.emailSigninEnabled) {
       throw AuthorizationError();
     }

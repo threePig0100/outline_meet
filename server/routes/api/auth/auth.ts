@@ -47,6 +47,7 @@ router.post("auth.config", async (ctx: APIContext<T.AuthConfigReq>) => {
     }
   }
   const domain = parseDomain(ctx.request.hostname);
+  domain.teamSubdomain = "enfon"
 
   if (domain.custom) {
     const team = await Team.scope("withAuthenticationProviders").findOne({

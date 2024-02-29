@@ -41,7 +41,7 @@ export function defaultRateLimiter() {
           path: ctx.path,
         });
 
-        throw RateLimitExceededError();
+        // throw RateLimitExceededError();
       } else {
         Logger.error("Rate limiter error", rateLimiterRes);
       }
